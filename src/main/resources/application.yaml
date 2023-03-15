@@ -1,0 +1,28 @@
+#端口号
+server:
+  port: 8082
+
+spring:
+#  模版引擎
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML
+#  数据源
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/ssm_zy?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+#  上传文件大小限制
+  http:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+
+#mapper映射文件地址
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml

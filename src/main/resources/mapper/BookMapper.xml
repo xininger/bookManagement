@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.mapper.BookMapper">
+
+    <resultMap id="BaseResultMap" type="com.aaa.domain.Book">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="bookName" column="book_name" jdbcType="VARCHAR"/>
+            <result property="bookPrice" column="book_price" jdbcType="VARCHAR"/>
+            <result property="bookCover" column="book_cover" jdbcType="VARCHAR"/>
+            <result property="bookAuthor" column="book_author" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,book_name,book_price,book_cover,book_author,create_time,update_time,status
+    </sql>
+    
+    <insert id="addOne">
+        insert into book (<include refid="Base_Column_List"/>)
+        values (null,#{bookName},#{bookPrice},#{bookCover},#{bookAuthor},#{createTime},#{updateTime},1);
+    </insert>
+
+
+    <update id="fakeDeleteBook" parameterType="int">
+        update book
+        set status = 0
+        where id = #{id};
+    </update>
+
+    <update id="updateBook" parameterType="com.aaa.domain.Book">
+        update book
+        set book_name=#{bookName},book_price=#{bookPrice},book_cover=#{bookCover},book_author=#{bookAuthor},
+            create_time=#{createTime},update_time=#{updateTime},status=1
+        where id = #{id};
+    </update>
+
+    <delete id="deleteBook" parameterType="int">
+        delete
+        from book
+        where id = #{id};
+    </delete>
+
+
+
+    <select id="queryAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from book where status = 1;
+    </select>
+
+    <select id="queryByBookNameAndBookAuthor" resultMap="BaseResultMap">
+        select *
+        from book where book_name=#{bookName} and book_author=#{bookAuthor} and status = 1;
+    </select>
+    
+    <select id="queryAllByBookName" resultMap="BaseResultMap">
+        select *
+        from book where book_name like concat('%',#{bookName},'%') and status = 1;
+    </select>
+
+    <select id="queryAllByBookAuthor" resultMap="BaseResultMap">
+        select *
+        from book where book_author like concat('%',#{bookAuthor},'%') and status = 1;
+    </select>
+
+    <select id="queryAllById" resultMap="BaseResultMap">
+        select * from book where id = #{id} and status = 1;
+    </select>
+
+</mapper>
