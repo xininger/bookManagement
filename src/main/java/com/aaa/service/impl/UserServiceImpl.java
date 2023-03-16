@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author Dear Zhang
 * @description 针对表【t_user】的数据库操作Service实现
@@ -31,5 +33,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public int regist(String username, String password) {
         return userMapper.regist(username,password);
+    }
+
+    @Override
+    public List<User> selectAllUser() {
+        return userMapper.selectAllUser();
     }
 }

@@ -69,10 +69,10 @@
 	<div class="row">
 		<div class="col-md-2">
 			<div class="list-group">
-				<a href="#" class="list-group-item active">
+				<a th:href="@{/book/toDash}" id="bookLight" onclick="bookLight()" class="list-group-item active">
 					书籍管理
 				</a>
-				<a href="#" class="list-group-item">作者管理</a>
+				<a th:href="@{/admin/user}" id="userLight" onclick="userLight()" class="list-group-item">用户管理</a>
 				<a href="#" class="list-group-item">出版社管理</a>
 				<a href="#" class="list-group-item">其它</a>
 			</div>
@@ -115,7 +115,7 @@
 					</form>
 
 					<div class="col-lg-1">
-						<a th:href="@{/book/toAdd}" class="btn btn-success">新增</a>
+						<a th:href="@{/book/toAdd}" class="btn btn-success">新增图书</a>
 					</div><!-- /.col-lg-6 -->
 
 					<div class="col-lg-1">
@@ -246,4 +246,14 @@
 	</div>
 </div>
 </body>
+
+<script type="text/javascript">
+	function bookLight() {
+		$(this).addClass("active");
+		$("#userLight").removeClass("active");
+	}
+	function userLight() {
+		$(this).addClass("active");
+		$("#bookLight").removeClass("active");
+	}
 </html>

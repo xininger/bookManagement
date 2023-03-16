@@ -16,7 +16,7 @@
     </sql>
 
 
-
+<!--查询全部用户和管理员-->
     <select id="selectAll" resultMap="BaseResultMap">
         select *
         from user;
@@ -35,6 +35,11 @@
     <select id="findUserByName" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"></include>
         from user where username=#{username};
+    </select>
+<!--    查询所用用户-->
+    <select id="selectAllUser" resultMap="BaseResultMap">
+        select *
+        from user where role=0;
     </select>
 
     <insert id="regist">

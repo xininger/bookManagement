@@ -33,6 +33,11 @@ public class BookController {
         return "admin/dashboard";
     }
 
+    @RequestMapping("/toDash")
+    public String toDash() {
+        return "admin/dashboard";
+    }
+
     @RequestMapping("/showAllBook")
     public String showAllBook(HttpServletRequest request) {
         List<Book> books = bookService.queryAll();

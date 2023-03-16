@@ -36,4 +36,11 @@ public interface UserService extends IService<User>{
      */
     int regist(@Param("username") String username,@Param("password") String password);
 
+
+    /**
+     * 查询所有用户
+     * @return
+     */
+    List<User> selectAllUser();
+
 }
