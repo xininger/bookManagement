@@ -43,4 +43,31 @@ public interface UserService extends IService<User>{
      */
     List<User> selectAllUser();
 
+    /**
+     * 通过id查询用户
+     * @param id
+     * @return
+     */
+    List<User> queryAllById(@Param("id") int id);
+
+    /**
+     * 通过用户名查询用户
+     * @param username
+     * @return
+     */
+    List<User> queryAllByUsername(@Param("username") String username);
+
+    /**
+     * 根据用户状态查询用户
+     * @param locked
+     * @return
+     */
+    List<User> queryByLocked(@Param("locked") int locked);
+
+    /**
+     * 添加用户
+     * @param user
+     * @return
+     */
+    int addOne(User user);
 }

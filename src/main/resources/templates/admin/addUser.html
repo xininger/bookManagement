@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>添加用户</title>
+
+    <!--用百度的静态资源库的cdn安装bootstrap环境-->
+    <!-- Bootstrap 核心 CSS 文件 -->
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!--font-awesome 核心我CSS 文件-->
+    <link href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 在bootstrap.min.js 之前引入 -->
+    <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+    <!-- Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+
+    <!--为了保险起见，导入了本地的jquery和fontawesome    -->
+    <!--jquery-->
+    <script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js" ></script>
+    <!--    <link rel="stylesheet" href="css/Login.css">-->
+    <!--    &lt;!&ndash;font-awesome    &ndash;&gt;-->
+    <!--    <link rel="stylesheet" href="font-awesome-4\7\0\css\font-awesome.min.css">-->
+
+</head>
+<body>
+<div class="container">
+    <div class="form row">
+        <form class="form-horizontal col-sm-offset col-md-offset-3" th:action="@{/admin/addUser}" method="post">
+            <h3 class="form-title">添加用户</h3>
+            <div class="col-sm-9 col-md-9">
+                <div class="form-group">
+                    <!--        用户姓名           -->
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input class="form-control required" type="text" name="username" id="username" placeholder="请输入用户名" required>
+                </div>
+
+                <!--        用户密码              -->
+                <div class="form-group">
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                    <input class="form-control required" type="text" name="password" id="password" placeholder="请输入密码" required>
+                </div>
+
+                <!--        用户状态              -->
+<!--                <div class="form-group">-->
+<!--                    <i class="fa fa-key" aria-hidden="true"></i>-->
+<!--                    <input class="form-control required" type="text" name="status" id="status" placeholder="请选择用户状态" required>-->
+<!--                </div>-->
+                <div class="form-group form-check form-check-inline">
+                    请选择用户状态:
+                    <input class="form-check-input" type="radio" name="locked" id="locked0" value="0">
+                    <label class="form-check-label" for="locked0">正常</label>
+                    <input class="form-check-input" type="radio" name="locked" id="locked1" value="1">
+                    <label class="form-check-label" for="locked1">锁定</label>
+                </div>
+
+                <!--        用户角色               -->
+<!--                <div class="form-group">-->
+<!--                    <i class="fa fa-key" aria-hidden="true"></i>-->
+<!--                    <input class="form-control required" type="text" name="role" id="role" placeholder="请选择用户权限" required>-->
+<!--                </div>-->
+
+                <div class="form-group form-check form-check-inline">
+                    请选择用户权限:
+                    <input class="form-check-input" type="radio" name="role" id="role0" value="0">
+                    <label class="form-check-label" for="role0">普通用户</label>
+                    <input class="form-check-input" type="radio" name="role" id="role1" value="1">
+                    <label class="form-check-label" for="role1">管理员用户</label>
+                </div>
+                <!--        邮箱                -->
+                <!--                <div class="form-group">-->
+                <!--                    <i class="fa fa-envelope" aria-hidden="true"></i>-->
+                <!--                    <input class="form-control required" type="email" name="email" id="email" placeholder="请输入邮箱" required>-->
+                <!--                </div>-->
+                <br>
+                <div th:if="${not #strings.isEmpty(session.umsg)}">
+                    <div th:text="${session.umsg}" class="text-danger text-lg-center"></div>
+                </div>
+                <br>
+                <!--注册按钮-->
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">点击添加</button>
+                    <!--                    <input type="submit" value="注册" class="btn btn-success pull-right">-->
+                    <a th:href="@{/admin/user}" class="btn btn-lg btn-primary btn-block" type="submit">返回首页</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--<script type="text/javascript">-->
+<!--    function register() {-->
+<!--    //    提示信息-->
+<!--        alert("注册成功!");-->
+<!--        window.location.href = "index.html";-->
+<!--    }-->
+<!--</script>-->
+</body>
+</html>>

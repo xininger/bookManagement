@@ -23,6 +23,7 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
+
     /**
      * 返回到用户首页
      *
@@ -41,7 +42,7 @@ public class BookController {
     @RequestMapping("/showAllBook")
     public String showAllBook(HttpServletRequest request) {
         List<Book> books = bookService.queryAll();
-        request.getSession().setAttribute("books",books);
+        request.getSession().setAttribute("books", books);
         return "admin/dashboard";
     }
 
@@ -54,6 +55,7 @@ public class BookController {
     public String toAdd() {
         return "admin/addBook";
     }
+
     /**
      * 添加图书
      * 添加图书页面的GET请求处理方法
@@ -64,8 +66,10 @@ public class BookController {
     public String addBookPage() {
         return "admin/addBook";
     }
+
     /**
      * 添加图书 接收表单提交的post请求方法
+     *
      * @param request
      * @return
      */
@@ -79,14 +83,14 @@ public class BookController {
         String bookPrice = request.getParameter("bookPrice");
         String bookCover = request.getParameter("bookCover");
         String bookAuthor = request.getParameter("bookAuthor");
-        log.info("添加图书 bookName={}，bookPrice={}，bookCover={}，bookAuthor={}",bookName,bookPrice,bookCover,bookAuthor);
+        log.info("添加图书 bookName={}，bookPrice={}，bookCover={}，bookAuthor={}", bookName, bookPrice, bookCover, bookAuthor);
 
-        if (MyToolUtil.checkEmpty(bookName, "bookName",request) ||MyToolUtil.checkEmpty(bookPrice, "bookPrice",request) ||MyToolUtil.checkEmpty(bookCover, "bookCover",request)||MyToolUtil.checkEmpty(bookAuthor, "bookAuthor",request))
+        if (MyToolUtil.checkEmpty(bookName, "bookName", request) || MyToolUtil.checkEmpty(bookPrice, "bookPrice", request) || MyToolUtil.checkEmpty(bookCover, "bookCover", request) || MyToolUtil.checkEmpty(bookAuthor, "bookAuthor", request))
             return "admin/addBook";  // 如果为空直接返回页面了
 //        判断是否已存在该书
         Book getBook = bookService.queryByBookNameAndBookAuthor(bookName, bookAuthor);
         if (getBook != null) {
-            log.info("bookName={},bookAuthor={} 存在数据",bookName,bookAuthor);
+            log.info("bookName={},bookAuthor={} 存在数据", bookName, bookAuthor);
             request.getSession().setAttribute("bmsg", "图书已存在！");
             return "admin/addBook";
         } else {
@@ -100,13 +104,14 @@ public class BookController {
             bookService.addOne(book);
             List<Book> books = bookService.queryAll();
             request.getSession().setAttribute("books", books);
-            log.info("添加图书 写入数据{}",MyToolUtil.objToJson(book))
+            log.info("添加图书 写入数据{}", MyToolUtil.objToJson(book));
             return "admin/dashboard";
         }
     }
 
     /**
      * 根据图书名称进行模糊查询
+     *
      * @param request
      * @return
      */
@@ -114,12 +119,13 @@ public class BookController {
     public String searchByName(HttpServletRequest request) {
         String bookName = request.getParameter("bookName");
         List<Book> books = bookService.queryAllByBookName(bookName);
-        request.getSession().setAttribute("books",books);
+        request.getSession().setAttribute("books", books);
         return "admin/dashboard";
     }
 
     /**
      * 根据作者名称进行模糊查询
+     *
      * @param request
      * @return
      */
@@ -127,33 +133,35 @@ public class BookController {
     public String searchByAuthor(HttpServletRequest request) {
         String bookAuthor = request.getParameter("bookAuthor");
         List<Book> books = bookService.queryAllByBookAuthor(bookAuthor);
-        request.getSession().setAttribute("books",books);
+        request.getSession().setAttribute("books", books);
         return "admin/dashboard";
     }
 
     /**
      * 逻辑删除图书
+     *
      * @param id
      * @return
      */
     @RequestMapping(value = "/deleteBook/{id}")
-    public String deleteBook(@PathVariable("id") int id,HttpServletRequest request) {
-        log.info("准备要删除这本书喽！！！");
+    public String deleteBook(@PathVariable("id") Integer id, HttpServletRequest request) { // 传值一定要用对象类
+        log.info("删除图书 id={}", id);
         bookService.fakeDeleteBook(id);
-        log.info("图书删除成功了哦！！！");
+        log.info("图书id={}删除成功", id);
         List<Book> books = bookService.queryAll();
-        request.getSession().setAttribute("books",books);
+        request.getSession().setAttribute("books", books);
         return "admin/dashboard";
     }
 
     /**
      * 跳转到图书修改页面
+     *
      * @return
      */
     @RequestMapping("/updateBook/{id}")
-    public String toUpdateBook(@PathVariable("id") int id,HttpServletRequest request) {
-        Book book = bookService.queryAllById(id);
-        request.getSession().setAttribute("book",book);
+    public String toUpdateBook(@PathVariable("id") Integer id, HttpServletRequest request) {
+        Book book = bookService.queryOneById(id);
+        request.getSession().setAttribute("book", book);
         return "admin/updateBook";
     }
 
@@ -163,14 +171,18 @@ public class BookController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/updateBook",method =RequestMethod.POST)
-    public String updateBook(Book book,HttpServletRequest request) {
-        book.setCreateTime(new Date());
-        book.setUpdateTime(new Date());
+    @RequestMapping(value = "/updateBook", method = RequestMethod.POST)
+    public String updateBook(Book book, HttpServletRequest request) {
+        log.info("修改图书 id={},book={}", book.getId(), MyToolUtil.objToJson(book));
+        Book queryOne = bookService.queryOneById(book.getId());
+        if (MyToolUtil.checkEmpty(queryOne, "根据" + book.getId() + "没有找到此书", request)) {
+            log.error("根据 id={} 查询无果", book.getId());
+            return "admin/dashboard";
+        }
         bookService.updateBook(book);
-        log.info("修改成功了！！！");
+        log.info("修改图书成功book={}", book);
         List<Book> books = bookService.queryAll();
-        request.getSession().setAttribute("books",books);
+        request.getSession().setAttribute("books", books);
         return "admin/dashboard";
     }
 }

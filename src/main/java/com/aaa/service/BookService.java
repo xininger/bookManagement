@@ -1,6 +1,7 @@
 package com.aaa.service;
 
 import com.aaa.domain.Book;
+import com.aaa.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,11 +48,11 @@ public interface BookService extends IService<Book> {
      */
     List<Book> queryAllByBookAuthor(@Param("bookAuthor")String bookAuthor);
 
-    Book queryAllById(@Param("id")int id);
+    Book queryOneById(@Param("id")Integer id);
 
-    int deleteBook(@Param("id") int id);
+    int deleteBook(@Param("id") Integer id);
 
-    int fakeDeleteBook(@Param("id") int id);
+    int fakeDeleteBook(@Param("id") Integer id);
 
     int updateBook(Book book);
 

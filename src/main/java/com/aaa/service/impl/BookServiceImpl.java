@@ -38,7 +38,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
 
     @Override
     public Book queryByBookNameAndBookAuthor(String bookName, String bookAuthor) {
-        return bookMapper.queryByBookNameAndBookAuthor(bookName,bookAuthor);
+        return bookMapper.queryByBookNameAndBookAuthor(bookName, bookAuthor);
     }
 
     @Override
@@ -52,22 +52,27 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     }
 
     @Override
-    public Book queryAllById(int id) {
+    public Book queryOneById(Integer id) {
+        if (null == id) {
+            return null;
+        }
         return bookMapper.queryAllById(id);
     }
 
     @Override
-    public int deleteBook(int id) {
+    public int deleteBook(Integer id) {
         return bookMapper.deleteBook(id);
     }
 
     @Override
-    public int fakeDeleteBook(int id) {
+    public int fakeDeleteBook(Integer id) {
         return bookMapper.fakeDeleteBook(id);
     }
 
     @Override
     public int updateBook(Book book) {
+        book.setCreateTime(new Date());
+        book.setUpdateTime(new Date());
         return bookMapper.updateBook(book);
     }
 }

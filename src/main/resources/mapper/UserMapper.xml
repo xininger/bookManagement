@@ -33,16 +33,36 @@
     </select>
 <!--    根据名字查询用户(注册时,可以调用)-->
     <select id="findUserByName" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"></include>
+        select <include refid="Base_Column_List"/>
         from user where username=#{username};
     </select>
 <!--    查询所用用户-->
     <select id="selectAllUser" resultMap="BaseResultMap">
         select *
-        from user where role=0;
+        from user order by role desc;
     </select>
-
+<!--    通过id模糊查询用户-->
+    <select id="queryAllById" resultType="com.aaa.domain.User">
+        select *
+        from user where id like concat('%',#{id},'%') order by role desc;
+    </select>
+<!--    通过用户名模糊查询用户-->
+    <select id="queryAllByUsername" resultMap="BaseResultMap">
+        select *
+        from user where username like concat('%',#{username},'%') order by role desc;
+    </select>
+<!--    根据用户状态查询用户-->
+    <select id="queryByLocked" resultMap="BaseResultMap">
+        select *
+        from user where locked = #{locked} order by role desc;
+    </select>
+    <!--用户注册-->
     <insert id="regist">
         insert into user values (null,#{username},#{password},0);
+    </insert>
+<!--添加用户-->
+    <insert id="addOne">
+        insert into user (<include refid="Base_Column_List"/>)
+        values (null,#{username},#{password},#{locked},#{role});
     </insert>
 </mapper>

@@ -39,4 +39,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public List<User> selectAllUser() {
         return userMapper.selectAllUser();
     }
+
+    @Override
+    public List<User> queryAllById(int id) {
+        return userMapper.queryAllById(id);
+    }
+
+    @Override
+    public List<User> queryAllByUsername(String username) {
+        return userMapper.queryAllByUsername(username);
+    }
+
+    @Override
+    public List<User> queryByLocked(int locked) {
+        return userMapper.queryByLocked(locked);
+    }
+
+    @Override
+    public int addOne(User user) {
+        return userMapper.addOne(user);
+    }
 }
