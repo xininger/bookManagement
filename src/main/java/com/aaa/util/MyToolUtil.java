@@ -24,4 +24,9 @@ public class MyToolUtil {
     private static String appendEmptyMsg(String msg) {
         return msg + "is empty";
     }
+
+
+    public static String objToJson(Object obj){
+        return JSON.toJSONString(obj);
+    }
 }
