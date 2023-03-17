@@ -23,7 +23,6 @@ public class AdminController {
     @RequestMapping("/user")
     public String toUserInfo(HttpServletRequest request) {
         List<User> users = userService.selectAllUser();
-        System.out.println(users);
         request.getSession().setAttribute("users",users);
         return "admin/userinfo";
     }

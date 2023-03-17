@@ -71,7 +71,6 @@ public class BookController {
      */
     @RequestMapping(value = "/addBook", method = RequestMethod.POST)
     public String addBook(HttpServletRequest request) {
-        log.info("进入添加图书！");
 //        String token = request.getParameter("token");
 //        if (!"xxxxxxxxx".equals(token)){
 //            return "admin/addBook";
@@ -80,18 +79,17 @@ public class BookController {
         String bookPrice = request.getParameter("bookPrice");
         String bookCover = request.getParameter("bookCover");
         String bookAuthor = request.getParameter("bookAuthor");
-        System.out.println(request.getRemoteHost());
+        log.info("添加图书 bookName={}，bookPrice={}，bookCover={}，bookAuthor={}",bookName,bookPrice,bookCover,bookAuthor);
 
         if (MyToolUtil.checkEmpty(bookName, "bookName",request) ||MyToolUtil.checkEmpty(bookPrice, "bookPrice",request) ||MyToolUtil.checkEmpty(bookCover, "bookCover",request)||MyToolUtil.checkEmpty(bookAuthor, "bookAuthor",request))
             return "admin/addBook";  // 如果为空直接返回页面了
 //        判断是否已存在该书
         Book getBook = bookService.queryByBookNameAndBookAuthor(bookName, bookAuthor);
         if (getBook != null) {
-            log.info("存在数据");
+            log.info("bookName={},bookAuthor={} 存在数据",bookName,bookAuthor);
             request.getSession().setAttribute("bmsg", "图书已存在！");
             return "admin/addBook";
         } else {
-            log.info("写入数据");
             Book book = new Book();
             book.setBookName(bookName);
             book.setBookPrice(bookPrice);
@@ -102,6 +100,7 @@ public class BookController {
             bookService.addOne(book);
             List<Book> books = bookService.queryAll();
             request.getSession().setAttribute("books", books);
+            log.info("添加图书 写入数据{}",MyToolUtil.objToJson(book))
             return "admin/dashboard";
         }
     }
@@ -115,7 +114,6 @@ public class BookController {
     public String searchByName(HttpServletRequest request) {
         String bookName = request.getParameter("bookName");
         List<Book> books = bookService.queryAllByBookName(bookName);
-        System.out.println(books);
         request.getSession().setAttribute("books",books);
         return "admin/dashboard";
     }
@@ -129,7 +127,6 @@ public class BookController {
     public String searchByAuthor(HttpServletRequest request) {
         String bookAuthor = request.getParameter("bookAuthor");
         List<Book> books = bookService.queryAllByBookAuthor(bookAuthor);
-        System.out.println(books);
         request.getSession().setAttribute("books",books);
         return "admin/dashboard";
     }
