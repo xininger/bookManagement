@@ -74,4 +74,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public int deleteUser(Integer id) {
         return userMapper.deleteUser(id);
     }
+
+    @Override
+    public int updateLoginUserById(User user) {
+        return userMapper.updateLoginUserById(user);
+    }
 }

@@ -91,4 +91,6 @@ public interface UserService extends IService<User>{
      * @return
      */
     int deleteUser(@Param("id") Integer id);
+    int updateLoginUserById(User user);
+
 }

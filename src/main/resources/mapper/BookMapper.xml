@@ -58,12 +58,12 @@
     
     <select id="queryAllByBookName" resultMap="BaseResultMap">
         select *
-        from book where book_name like concat('%',#{bookName},'%') and status = 1;
+        from book where book_name like concat('%',#{bookName},'%');
     </select>
 
     <select id="queryAllByBookAuthor" resultMap="BaseResultMap">
         select *
-        from book where book_author like concat('%',#{bookAuthor},'%') and status = 1;
+        from book where book_author like concat('%',#{bookAuthor},'%');
     </select>
 
     <select id="queryAllById" resultMap="BaseResultMap">

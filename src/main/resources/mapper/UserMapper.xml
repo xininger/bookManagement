@@ -21,6 +21,12 @@
         where id = #{id};
     </update>
 
+    <update id="updateLoginUserById" parameterType="com.aaa.domain.User">
+        update user
+        set username=#{username},password = #{password}
+        where id=#{id} and locked=0 and role=0;
+    </update>
+
     <delete id="deleteUser" parameterType="integer">
         delete
         from user

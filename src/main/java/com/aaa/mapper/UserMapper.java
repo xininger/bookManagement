@@ -2,9 +2,7 @@ package com.aaa.mapper;
 
 import com.aaa.domain.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -100,4 +98,6 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     int deleteUser(@Param("id") Integer id);
+
+    int updateLoginUserById(User user);
 }
