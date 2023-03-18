@@ -79,4 +79,25 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     List<User> queryByLocked(@Param("locked") int locked);
+
+    /**
+     * 通过id查询用户
+     * @param id
+     * @return
+     */
+    User findById(@Param("id") Integer id);
+
+    /**
+     * 修改用户
+     * @param user
+     * @return
+     */
+    int updateUser(User user);
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    int deleteUser(@Param("id") Integer id);
 }

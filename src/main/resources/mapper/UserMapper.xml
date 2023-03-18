@@ -15,8 +15,20 @@
         id,username,password,locked,role
     </sql>
 
+    <update id="updateUser" parameterType="com.aaa.domain.User">
+        update user
+        set username=#{username},password=#{password},locked=#{locked},role=#{role}
+        where id = #{id};
+    </update>
 
-<!--查询全部用户和管理员-->
+    <delete id="deleteUser" parameterType="integer">
+        delete
+        from user
+        where id=#{id};
+    </delete>
+
+
+    <!--查询全部用户和管理员-->
     <select id="selectAll" resultMap="BaseResultMap">
         select *
         from user;
@@ -55,6 +67,10 @@
     <select id="queryByLocked" resultMap="BaseResultMap">
         select *
         from user where locked = #{locked} order by role desc;
+    </select>
+    <select id="findById" resultMap="BaseResultMap">
+        select *
+        from user where id = #{id};
     </select>
     <!--用户注册-->
     <insert id="regist">

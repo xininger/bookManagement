@@ -59,4 +59,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public int addOne(User user) {
         return userMapper.addOne(user);
     }
+
+    @Override
+    public User findById(Integer id) {
+        return userMapper.findById(id);
+    }
+
+    @Override
+    public int updateUser(User user) {
+        return userMapper.updateUser(user);
+    }
+
+    @Override
+    public int deleteUser(Integer id) {
+        return userMapper.deleteUser(id);
+    }
 }

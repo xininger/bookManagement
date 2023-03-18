@@ -70,4 +70,25 @@ public interface UserService extends IService<User>{
      * @return
      */
     int addOne(User user);
+
+    /**
+     * 通过id查询用户
+     * @param id
+     * @return
+     */
+    User findById(@Param("id") Integer id);
+
+    /**
+     * 修改用户
+     * @param user
+     * @return
+     */
+    int updateUser(User user);
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    int deleteUser(@Param("id") Integer id);
 }

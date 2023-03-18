@@ -6,6 +6,7 @@ import com.aaa.util.MyToolUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -147,5 +148,49 @@ public class AdminController {
             request.getSession().setAttribute("users",users);
             return "admin/userinfo";
         }
+    }
+
+    /**
+     * 跳转到修改用户页面
+     * @param id
+     * @param request
+     * @return
+     */
+    @RequestMapping("/updateUser/{id}")
+    public String toUpdateUser(@PathVariable("id") Integer id,HttpServletRequest request) {
+        User user = userService.findById(id);
+        log.info("user={}",MyToolUtil.objToJson(user));
+        request.getSession().setAttribute("user",user);
+        return "admin/updateUser";
+    }
+
+    /**
+     * 修改用户
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
+    public String updateUser(User user,HttpServletRequest request) {
+        log.info("修改用户 id={},user={}", user.getId(), MyToolUtil.objToJson(user));
+        User findOne = userService.findById(user.getId());
+        if (MyToolUtil.checkEmpty(findOne, "根据" + user.getId() + "没有找到此用户", request)) {
+            log.error("根据 id={} 查询无果", user.getId());
+            return "admin/userinfo";
+        }
+        userService.updateUser(user);
+        log.info("修改用户成功user={}", user);
+        List<User> users = userService.selectAllUser();
+        request.getSession().setAttribute("users",users);
+        return "admin/userinfo";
+    }
+
+    @RequestMapping("/deleteUser/{id}")
+    public String deleteUser(@PathVariable("id") Integer id,HttpServletRequest request) {
+        log.info("删除用户 id={}",id);
+        userService.deleteUser(id);
+        log.info("用户id={}删除成功",id);
+        List<User> users = userService.selectAllUser();
+        request.getSession().setAttribute("users",users);
+        return "admin/userinfo";
     }
 }
